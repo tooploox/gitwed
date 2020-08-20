@@ -675,7 +675,6 @@ if (!cfg.serviceName)
 
 if (!cfg.rootDirectory)
     cfg.rootDirectory = "sample"
-// cfg.rootDirectory = "new"
 
 if (!cfg.justDir && !cfg.cdnPath)
     cfg.cdnPath = "/cdn"
