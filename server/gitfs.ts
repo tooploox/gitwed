@@ -29,7 +29,7 @@ export interface Config {
     production?: boolean;
     vhosts?: SMap<string>;
     certEmail?: string;
-    rootDirectory?: string; // defaults to /events/
+    rootDirectory?: string; // defaults to /sample/
     pages?: string[],
     allowedEmailRecipients?: string[];
     services?: rest.ServiceConfig[];

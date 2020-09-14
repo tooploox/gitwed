@@ -541,7 +541,7 @@ async function genericGet(req: express.Request, res: express.Response) {
                         const pcfg = await expander.getPageConfigAsync(base)
 
                         if (!req.appuser) {
-                            if(pcfg.custom404) res.redirect(pcfg.custom404)
+                            if(pcfg.custom404) customNotFound(req, `/${gitfs.config.rootDirectory}/${pcfg.custom404}`)
                             else notFound(req)
                             return
                         }
@@ -608,8 +608,7 @@ async function genericGet(req: express.Request, res: express.Response) {
         }
 
         pageCache.set(cacheKey, page.html)
-        const status = req.url === ("/" + cfg.pageConfig.custom404) ? 404 : 200
-        res.writeHead(status, {
+        res.writeHead(200, {
             'Content-Type': 'text/html; charset=utf8'
         })
         res.end(page.html)
@@ -624,6 +623,12 @@ function notFound(req: express.Request, msg = "") {
     res.status(404)
     routing.sendError(req, "Page not found",
         "Whoops! We couldn't find the page your were looking for. " + msg)
+}
+
+function customNotFound(req: express.Request, path: string) {
+    let res = req._response as express.Response
+    res.status(404)
+    routing.sendTemplate(req, path)
 }
 
 function setupFinalRoutes() {
